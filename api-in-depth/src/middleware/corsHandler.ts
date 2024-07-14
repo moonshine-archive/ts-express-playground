@@ -10,5 +10,9 @@ export function corsHandler(req: Request, res: Response, next: NextFunction) {
         return res.status(200).json({});
     }
 
+    if (req.path.includes('/favicon.ico')) {
+        return res.status(204).end();
+    }
+
     next();
 }

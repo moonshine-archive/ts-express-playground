@@ -1,17 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
-import Joi from 'joi';
+import { Model } from 'mongoose';
 
-export function Validate<T = any>(schema: Joi.ObjectSchema<T>) {
+export function MongoDelete(model: Model<any>) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         const originalMethod = descriptor.value;
 
         descriptor.value = async function (req: Request, res: Response, next: NextFunction) {
             try {
-                await schema.validateAsync(req.body);
+                const document = await model.findOneAndDelete({ _id: req.params.id });
+
+                if (!document) return res.sendStatus(404);
             } catch (error) {
                 logging.error(error);
 
-                return res.status(422).json(error);
+                return res.status(400).json(error);
             }
 
             return originalMethod.call(this, req, res, next);
