@@ -4,6 +4,7 @@
     "description": "a basic api in nodejs with typescript ",
     "main": "src/server.ts",
     "scripts": {
+        "start:dev": "nodemon ./src/server.ts",
         "build": "tsc",
         "test": "jest --config jest.config.ts --detectOpenHandles --coverage --maxWorkers=1"
     },
