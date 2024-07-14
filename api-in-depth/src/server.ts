@@ -1,14 +1,17 @@
 import http from 'http';
 import express from 'express';
 import './config/logging';
+import 'reflect-metadata';
 
 import { corsHandler } from './middleware/corsHandler';
 import { loggingHandler } from './middleware/loggingHandler';
 import { routeNotFound } from './middleware/routeNotFound';
-import { server } from './config/config';
+
+import MainController from './controllers/main';
+import { defineRoutes } from './modules/routes';
 
 export const application = express();
-export let httpServer: ReturnType<typeof http.createServer>;
+export let server: ReturnType<typeof http.createServer>;
 
 export const Main = () => {
     logging.log('----------------------------------------');
@@ -26,9 +29,7 @@ export const Main = () => {
     logging.log('----------------------------------------');
     logging.log('Define Controller Routing');
     logging.log('----------------------------------------');
-    application.get('/main/healthcheck', (req, res, next) => {
-        return res.status(200).json({ hello: 'world!' });
-    });
+    defineRoutes([MainController], application);
 
     logging.log('----------------------------------------');
     logging.log('Define Routing Error');
@@ -38,14 +39,14 @@ export const Main = () => {
     logging.log('----------------------------------------');
     logging.log('Starting Server');
     logging.log('----------------------------------------');
-    httpServer = http.createServer(application);
-    httpServer.listen(server.SERVER_PORT, () => {
+    server = http.createServer(application);
+    server.listen(1337, () => {
         logging.log('----------------------------------------');
-        logging.log(`Server started on ${server.SERVER_HOSTNAME}:${server.SERVER_PORT}`);
+        logging.log(`Server started on ${JSON.stringify(server.address())}`);
         logging.log('----------------------------------------');
     });
 };
 
-export const Shutdown = (callback: any) => httpServer && httpServer.close(callback);
+export const Shutdown = (callback: any) => server && server.close(callback);
 
 Main();
