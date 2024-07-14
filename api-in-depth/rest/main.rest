@@ -1,5 +1,13 @@
 ### Options
-OPTIONS http://localhost:1337
+OPTIONS http://localhost:12345
 
 ### Healthcheck
-GET http://localhost:1337/main/healthcheck
+GET http://localhost:12345/healthcheck
+
+### Healthcheck 
+POST http://localhost:12345/healthcheck 
+Content-Type: application/json
+
+{
+"name": "test"
+}
