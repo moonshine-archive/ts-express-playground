@@ -1,32 +1,33 @@
-import { Request, Response, NextFunction } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { Controller } from '../decorators/controller';
 import { Route } from '../decorators/route';
-import Joi from 'joi';
 import { Validate } from '../decorators/validate';
+import Joi from 'joi';
 
-type validation = {
+type dataValidation = {
     name: string;
-    email?: string;
+    reason?: string;
 };
 
-const postHealthCheckValidation = Joi.object<validation>({
+const dataValidationTest = Joi.object<dataValidation>({
     name: Joi.string().required(),
-    email: Joi.string().email()
+    reason: Joi.string()
 });
 
-@Controller()
+@Controller('/main')
 class MainController {
     @Route('get', '/healthcheck')
     getHealthCheck(req: Request, res: Response, next: NextFunction) {
-        logging.info('Healthcheck called successfully!');
+        logging.info('Healthcheck route called successfully!');
         return res.status(200).json({ hello: 'world!' });
     }
 
-    @Route('post', '/healthcheck')
-    @Validate(postHealthCheckValidation)
-    postHealthCheck(req: Request, res: Response, next: NextFunction) {
-        logging.info('Healthcheck called successfully!');
-        return res.status(200).json({ ...req.body });
+    @Route('post', '/datacheck')
+    @Validate(dataValidationTest)
+    postDataCheck(req: Request, res: Response, next: NextFunction) {
+        logging.info('Data route called successfully!');
+        logging.info('Data: ', req.body);
+        return res.status(200).json(req.body);
     }
 }
 
