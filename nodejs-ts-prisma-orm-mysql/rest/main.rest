@@ -1,0 +1,129 @@
+### SignUp
+POST http://localhost:3000/api/auth/signup HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Test",
+    "email": "Test@gmail.com",
+    "password": "Test123"
+}
+
+### SignUp Unprocessable request test 
+POST http://localhost:3000/api/auth/signup HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "Test@gmail.com",
+    "password": "Test123"
+}
+
+
+### Login
+POST http://localhost:3000/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "Test@gmail.com",
+    "password": "Test123"
+}
+
+### Login Admin 
+POST http://localhost:3000/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "TestAdmin@gmail.com",
+    "password": "Test123"
+}
+
+### Login Incorrect password
+POST http://localhost:3000/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "Test@gmail.com",
+    "password": "Test323232"
+}
+
+### Me (Unauthorized)
+GET http://localhost:3000/api/auth/me HTTP/1.1
+
+### Me (로그인해서 받은 토큰을 authorization에 삽입)
+GET http://localhost:3000/api/auth/me HTTP/1.1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcyMTU0NTcyNX0.ebfRv0llqwJzwd-zAU1tIVDid_iBPIHtax5ZdewdJas
+
+### Create Product 
+POST http://localhost:3000/api/products HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcyMTU0NjU4Nn0.zdartc2tz5QPbMIie-0YVBkezakGc1Q7tm5SzU3iXsI
+
+{
+    "name": "Tea",
+    "description": "A sweet tea",
+    "tags": ["tea", "india"],
+    "price": "20"
+}
+
+### Update Product 
+PUT http://localhost:3000/api/products/1 HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcyMTU1MjI2Mn0.q3EIw6wZ_nIjbkcRJQJyo8CHyXHcCQ4dyMYEIG0ngZM
+
+{
+    "name": "Tea",
+    "description": "A sweet tea",
+    "tags": ["tea", "india2"],
+    "price": "20"
+}
+
+### GET LIST OF Product 
+GET http://localhost:3000/api/products?skip=1 HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcyMTU1MjI2Mn0.q3EIw6wZ_nIjbkcRJQJyo8CHyXHcCQ4dyMYEIG0ngZM
+
+### GET Product By Id
+GET http://localhost:3000/api/products/1 HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcyMTU1MjI2Mn0.q3EIw6wZ_nIjbkcRJQJyo8CHyXHcCQ4dyMYEIG0ngZM
+
+### Add Address
+POST http://localhost:3000/api/users/address HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcyMTU1MjI2Mn0.q3EIw6wZ_nIjbkcRJQJyo8CHyXHcCQ4dyMYEIG0ngZM
+
+{
+    "lineOne": "C-671",
+    "lineTwo": "Parking road",
+    "city": "Delhi",
+    "country": "India",
+    "pincode": "123456"
+}
+
+### Update User
+PUT http://localhost:3000/api/users HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcyMTU1MjI2Mn0.q3EIw6wZ_nIjbkcRJQJyo8CHyXHcCQ4dyMYEIG0ngZM
+
+{
+  "defaultShippingAddress": 2
+}
+
+### Add Cart 
+POST http://localhost:3000/api/carts HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcyMTU1MjI2Mn0.q3EIw6wZ_nIjbkcRJQJyo8CHyXHcCQ4dyMYEIG0ngZM
+
+{
+  "productId": 1,
+  "quantity": 2
+}
+
+### Create Order
+POST http://localhost:3000/api/orders HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcyMTU1MjI2Mn0.q3EIw6wZ_nIjbkcRJQJyo8CHyXHcCQ4dyMYEIG0ngZM
+
+### Get Order By Id
+GET http://localhost:3000/api/orders/1 HTTP/1.1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjgsImlhdCI6MTcyMTU1MjI2Mn0.q3EIw6wZ_nIjbkcRJQJyo8CHyXHcCQ4dyMYEIG0ngZM
